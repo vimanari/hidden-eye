@@ -14,8 +14,10 @@ void logKeystroke()
 {
     // get the keystroke using the GetAsyncKeyState() function
     
-    key = GetAsyncKeyState(VK_LBUTTON);
+    // key = GetAsyncKeyState(VK_LBUTTON);
     
+    key = GetKeyState('A') & 0x8000;
+
     // print the keystroke
     cout << key;
 }

